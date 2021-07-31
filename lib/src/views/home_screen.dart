@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:imageria/src/constants/constants.dart';
 import 'package:imageria/src/models/image_model.dart';
@@ -77,8 +76,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
+                                            setState(() {
+                                              offset = offset + 1;
+                                            
+                                            });
                                             imagesProvider
-                                                .loadImages(offset: offset + 1)
+                                                .loadImages(offset: offset)
                                                 .then((imgList) {
                                               for (var item in imgList) {
                                                 _imageList.add(item);
@@ -128,8 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           vertical: height * 0.02,
                                           horizontal: width * 0.02),
                       child: Shimmer.fromColors(
-                        baseColor: Colors.grey[300],
-                        highlightColor: Colors.grey[100],
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
                         enabled: true,
                         child: Container(
                           width: width,

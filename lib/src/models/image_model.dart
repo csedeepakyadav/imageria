@@ -1,6 +1,6 @@
 class ImageModel {
-  String xtImage;
-  String id;
+  String? xtImage;
+  String? id;
 
   ImageModel({this.xtImage, this.id});
 

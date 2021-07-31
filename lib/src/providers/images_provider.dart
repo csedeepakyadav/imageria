@@ -14,7 +14,7 @@ class ImagesProvider with ChangeNotifier {
   bool hasError = false;
   getHasError() => hasError;
 
-  Future<List<ImageModel>> loadImages({@required int offset}) async {
+  Future<List<ImageModel>> loadImages({@required int? offset}) async {
     await imageRepository.fetchImages(offset: offset).then((imageList) {
       if (imageList == []) {
         hasError = true;

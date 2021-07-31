@@ -1,3 +1,3 @@
 
 
-String baseUrl = "your base api url";
+String baseUrl = "http://dev1.xicom.us/xttest/";

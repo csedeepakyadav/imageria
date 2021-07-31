@@ -9,12 +9,12 @@ class UserRepository {
   Dio _dio = new Dio();
 
   Future<SaveUserResponseModel> saveUser({
-    @required String firstName,
-    @required String lastName,
-    @required String email,
-    @required String phoneNumber,
-    @required File image,
-    @required String imageName,
+    @required String? firstName,
+    @required String? lastName,
+    @required String? email,
+    @required String? phoneNumber,
+    @required File? image,
+    @required String? imageName,
   }) async {
     SaveUserResponseModel responseModel;
     var formData = FormData.fromMap({
@@ -23,7 +23,7 @@ class UserRepository {
       'email': email,
       "phone": phoneNumber,
       "user_image":
-          await MultipartFile.fromFile(image.path, filename: imageName),
+          await MultipartFile.fromFile(image!.path, filename: imageName),
     });
     try {
       var response = await _dio.post('$baseUrl/savedata.php', data: formData);

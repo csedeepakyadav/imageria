@@ -356,7 +356,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  if (_formKey.currentState.validate()) {
+                                  if (_formKey.currentState!.validate()) {
                                     connectivityProvider
                                         .checkInternet()
                                         .then((hasInternet) {

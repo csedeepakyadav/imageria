@@ -7,7 +7,7 @@ import 'package:imageria/src/models/image_model.dart';
 class ImageRepository {
   Dio _dio = new Dio();
 
-  Future<List<ImageModel>> fetchImages({@required int offset}) async {
+  Future<List<ImageModel>> fetchImages({@required int? offset}) async {
     List<ImageModel> imageList = [];
     var formData =
         FormData.fromMap({'user_id': 108, 'offset': offset, 'type': "popular"});
