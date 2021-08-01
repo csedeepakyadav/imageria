@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:imageria/src/widgets/shimmer_loader_widget.dart';
 import 'dart:ui' as ui;
 import 'package:shimmer/shimmer.dart';
 
@@ -19,7 +20,6 @@ class ImageCard extends StatelessWidget {
     }));
 
     return Container(
-      color: Colors.black,
       child: FutureBuilder<ui.Image>(
         future: completer.future,
         builder: (BuildContext context, AsyncSnapshot<ui.Image> snapshot) {
@@ -32,16 +32,7 @@ class ImageCard extends StatelessWidget {
               ),
             );
           } else {
-          return Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[100]!,
-            enabled: true,
-            child: Container(
-              width: width,
-              height: height * 0.3,
-              color: Colors.white,
-            ),
-          );
+          return ShimmerLoaderWidget();
             }
         },
       ),

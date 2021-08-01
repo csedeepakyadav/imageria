@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:imageria/src/providers/connectivity_provider.dart';
 import 'package:imageria/src/providers/images_provider.dart';
 import 'package:imageria/src/splash_screen.dart';
+import 'package:imageria/src/views/detail_screen.dart';
 import 'package:imageria/src/views/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,7 @@ void main() {
     runApp(new MyApp());
   });
 }
+
 
 class MyApp extends StatefulWidget {
   @override
@@ -40,6 +42,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/': (context) => SplashScreen(),
           '/homescreen': (context) => HomeScreen(),
+
         },
       ),
     );

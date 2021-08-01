@@ -5,6 +5,7 @@ import 'package:imageria/src/providers/connectivity_provider.dart';
 import 'package:imageria/src/providers/images_provider.dart';
 import 'package:imageria/src/views/detail_screen.dart';
 import 'package:imageria/src/widgets/image_card.dart';
+import 'package:imageria/src/widgets/shimmer_loader_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -43,126 +44,125 @@ class _HomeScreenState extends State<HomeScreen> {
     final imagesProvider = Provider.of<ImagesProvider>(
       context,
     );
-    return Scaffold(
-        body: isInternet
-            ? imagesProvider.getisLoading() == false
-                ? Container(
-                    child: ListView.builder(
-                        itemCount: _imageList.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => DetailScreen(
-                                                imgUrl:
-                                                    _imageList[index].xtImage,
+    return SafeArea(
+          child: Scaffold(
+          body: isInternet
+              ? imagesProvider.getisLoading() == false
+                  ? Container(
+                      child: ListView.builder(
+                          itemCount: _imageList.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => DetailScreen(
+                                                  imgUrl:
+                                                      _imageList[index].xtImage,
+                                                )),
+                                      );
+                                    },
+                                    child: Container(
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: height * 0.02,
+                                            horizontal: width * 0.02),
+                                        child: ImageCard(
+                                            imgUrl: _imageList[index].xtImage))),
+                                index == _imageList.length - 1
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              connectivityProvider
+                                                  .checkInternet()
+                                                  .then((hasInternet) {
+                                                if (hasInternet) {
+                                                  setState(() {});
+                                                } else {
+                                                  setState(() {
+                                                    offset = offset + 1;
+                                                  });
+                                                  imagesProvider
+                                                      .loadImages(offset: offset)
+                                                      .then((imgList) {
+                                                    for (var item in imgList) {
+                                                      _imageList.add(item);
+                                                    }
+                                                    setState(() {});
+                                                  });
+                                                }
+                                              });
+                                            },
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  bottom: height * 0.05),
+                                              height: 40,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: width * 0.15),
+                                              decoration: BoxDecoration(
+                                                  gradient: buttonBgGradient,
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        blurRadius: 3,
+                                                        color: Colors.grey,
+                                                        offset: Offset(0, 2),
+                                                        spreadRadius: 2)
+                                                  ]),
+                                              child: Center(
+                                                  child: Text(
+                                                "Click Here To Load More",
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.white),
                                               )),
-                                    );
-                                  },
-                                  child: Container(
-                                      margin: EdgeInsets.symmetric(
-                                          vertical: height * 0.02,
-                                          horizontal: width * 0.02),
-                                      child: ImageCard(
-                                          imgUrl: _imageList[index].xtImage))),
-                              index == _imageList.length - 1
-                                  ? Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              offset = offset + 1;
-                                            
-                                            });
-                                            imagesProvider
-                                                .loadImages(offset: offset)
-                                                .then((imgList) {
-                                              for (var item in imgList) {
-                                                _imageList.add(item);
-                                              }
-                                              setState(() {});
-                                            });
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                                bottom: height * 0.05),
-                                            height: 40,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: width * 0.15),
-                                            decoration: BoxDecoration(
-                                                gradient: buttonBgGradient,
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      blurRadius: 3,
-                                                      color: Colors.grey,
-                                                      offset: Offset(0, 2),
-                                                      spreadRadius: 2)
-                                                ]),
-                                            child: Center(
-                                                child: Text(
-                                              "Click Here To Load More",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.white),
-                                            )),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  : SizedBox(),
-                            ],
-                          );
-                        }),
-                  )
-                : Container(
-                    child: ListView.builder(
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                    return Container(
-                       margin: EdgeInsets.symmetric(
-                                          vertical: height * 0.02,
-                                          horizontal: width * 0.02),
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        enabled: true,
-                        child: Container(
-                          width: width,
-                          height: height * 0.3,
-                          color: Colors.white,
+                                        ],
+                                      )
+                                    : SizedBox(),
+                              ],
+                            );
+                          }),
+                    )
+                  : Container(
+                      child: ListView.builder(
+                          itemCount: 3,
+                          itemBuilder: (context, index) {
+                            return Container(
+                                margin: EdgeInsets.symmetric(
+                                    vertical: height * 0.02,
+                                    horizontal: width * 0.02),
+                                child: ShimmerLoaderWidget());
+                          }))
+              : Container(
+                  width: width,
+                  height: height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Icon(
+                          Icons.info,
+                          size: 60,
                         ),
                       ),
-                    );
-                  }))
-            : Container(
-                width: width,
-                height: height,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      child: Icon(
-                        Icons.info,
-                        size: 60,
+                      SizedBox(
+                        height: 50,
                       ),
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Text(
-                      "No internet found.",
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                )));
+                      Text(
+                        "No internet found.",
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ))),
+    );
   }
 }
