@@ -1,16 +1,62 @@
-# imageria
+# Imageria Mobile Applicatiom ( Flutter )
+(Documentation)
 
-A new Flutter project.
+## How to run ?
 
-## Getting Started
+### * Windows
 
-This project is a starting point for a Flutter application.
+#### -> VS Code 
+* flutter pub get (in terminal )
+* flutter run (in termninal)
 
-A few resources to get you started if this is your first Flutter project:
+#### -> Android Studio
+* open project and click on run.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### * Mac
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### -> VS Code 
+* pub get (in terminal )
+* cd ios ( move to ios directory of project )
+* pod install (in terminal)
+* cd.. (interminal)
+* flutter run (in termninal)
+
+#### -> Xcode
+* open ( project->ios->Runner.xcworkspace ) in xcode.
+* click on run.
+
+## Details
+
+* Architecture used MVVM with the help of provider package.
+* For State management Provider Package is used.
+* For Http request dio package is used.
+
+
+## Project Flow and In-depth Technical Details
+
+* App starts.
+* navigates to splash screen, here hold here for 2 seconds, Then Navigates to home screen.
+* At home screen first it will check for internet with shimmer loader then it'will hit the image api and get the response,then json response will be stored in local model upon which ui will be build for Image list.
+* On tapping load more button api will be hit with an incremented offset value, after getting result it will added to existing local model of image list.
+* on taping single image it will navigate to detail screen, after filling the form it will check if form is validated then it will convert existing network image in local file then with the form data image will be sent in mutlipart with a loader, once it's succeeded, Success toast will be seen, upon failer a failer response will be seen.
+* Orientation portrait up.
+* Internet connectivity stream throughout the app.
+
+## Validations
+
+* Data validation.
+* Http response and request validation.
+* Form validation.
+* Internet connectivity validation.
+* Exception handling.
+
+## Others
+
+* Aspect ration have been maintained based on image size.
+* Shimmer loader used.
+* Sound Null-Safety
+
+## Test
+
+* Tested with android.
+* Tested with iOS.
